@@ -45,4 +45,15 @@ public class JobService {
     public List<Job> getJobsBySalaryGreaterThanEqual(Double salary) {
         return jobRepository.findBySalaryGreaterThanEqual(salary);
     }
+      public List<Job> findJobsByEmployerName(String employerName) {
+        return jobRepository.findJobsByEmployerName(employerName);
+    }
+
+    public void updateTitleById(Long id) {
+       jobRepository.updateTitleById(id);
+    }
+
+    public void deleteById(Long id) {
+        jobRepository.deleteById(id);
+    }
 }
