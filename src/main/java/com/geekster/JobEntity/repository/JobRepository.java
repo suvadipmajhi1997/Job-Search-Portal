@@ -18,14 +18,14 @@ public interface JobRepository extends CrudRepository<Job,Long> {
 
     List<Job> findBySalaryGreaterThanEqual(Double salary);
 
-    @Query("SELECT j FROM Job j WHERE j.employerName = :employerName")
-    List<Job> findJobsByEmployerName(@Param("employerName") String employerName);
+   @Query(value = "SELECT * FROM JOB  WHERE EMPLOYER_NAME = :employerName" , nativeQuery = true)
+    List<Job> findJobsByEmployerName(String employerName);
 
     @Modifying
-    @Query("UPDATE Job j SET j.title = :title WHERE j.id = :id")
-    int updateTitleById(@Param("title") String title, @Param("id") Long id);
+    @Query(value="UPDATE JOB  SET TITLE = :title WHERE id = :id", nativeQuery = true)
+    void updateTitleById(Long id);
 
     @Modifying
-    @Query("DELETE FROM Job j WHERE j.id = :id")
-    void deleteById(@Param("id") Long id);
+    @Query(value = "DELETE FROM JOB  WHERE ID = :id",nativeQuery = true)
+    void deleteById(Long id);
 }
