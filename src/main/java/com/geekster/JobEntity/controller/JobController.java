@@ -76,4 +76,35 @@ public class JobController {
         List<Job> jobs = jobService.getJobsBySalaryGreaterThanEqual(salary);
         return new ResponseEntity<>(jobs, HttpStatus.OK);
     }
+    
+//custom Query
+    @GetMapping(value = "/jobsBy/{employerName}")
+    public ResponseEntity<List<Job>>getByEmployeeName(String employerName){
+        List<Job>jobs=jobService.findJobsByEmployerName(employerName);
+        if(jobs!=null) {
+            return new ResponseEntity<>(jobs, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping(value = "/updateJob/{id}")
+    public ResponseEntity<Void> updateById(@PathVariable Long id){
+        Optional<Job>getJob=jobService.getJobById(id);
+        if(getJob.isPresent()){
+            jobService.updateTitleById(id);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<Void> removeJobById(@PathVariable Long id){
+        Optional<Job>found=jobService.getJobById(id);
+        if(found.isPresent()){
+            jobService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+   return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
 }
