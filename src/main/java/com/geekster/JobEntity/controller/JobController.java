@@ -78,8 +78,8 @@ public class JobController {
     }
     
 //custom Query
-    @GetMapping(value = "/jobsBy/{employerName}")
-    public ResponseEntity<List<Job>>getByEmployeeName(String employerName){
+     @GetMapping(value = "/jobsBy/{employerName}")
+    public ResponseEntity<List<Job>>getByEmployeeName(@PathVariable String employerName){
         List<Job>jobs=jobService.findJobsByEmployerName(employerName);
         if(jobs!=null) {
             return new ResponseEntity<>(jobs, HttpStatus.OK);
@@ -87,14 +87,11 @@ public class JobController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/updateJob/{id}")
-    public ResponseEntity<Void> updateById(@PathVariable Long id){
-        Optional<Job>getJob=jobService.getJobById(id);
-        if(getJob.isPresent()){
-            jobService.updateTitleById(id);
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PutMapping(value = "/updateJob/title/{title}/id/{id}")
+    public void updateById(@PathVariable String title,@PathVariable Long id){
+
+            jobService.updateTitleById(title,id);
+
     }
 
     @DeleteMapping(value = "/delete/{id}")
