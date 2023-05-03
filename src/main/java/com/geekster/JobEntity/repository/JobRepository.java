@@ -21,9 +21,9 @@ public interface JobRepository extends CrudRepository<Job,Long> {
    @Query(value = "SELECT * FROM JOB  WHERE EMPLOYER_NAME = :employerName" , nativeQuery = true)
     List<Job> findJobsByEmployerName(String employerName);
 
-    @Modifying
+   @Modifying
     @Query(value="UPDATE JOB  SET TITLE = :title WHERE id = :id", nativeQuery = true)
-    void updateTitleById(Long id);
+    void updateTitleById(String title,Long id);
 
     @Modifying
     @Query(value = "DELETE FROM JOB  WHERE ID = :id",nativeQuery = true)
